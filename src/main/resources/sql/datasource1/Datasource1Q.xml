@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.datasource1.Datasource1Q">
+
+<parameterMap id="parameterMap" type="seung.kimchi.types.SLinkedHashMap"></parameterMap>
+<resultMap    id="resultMap"    type="seung.kimchi.types.SLinkedHashMap"></resultMap>
+
+<select id="datasource1" parameterMap="parameterMap" resultMap="resultMap">
+<![CDATA[
+SELECT
+	'datasource1' AS datasource_name
+]]>
+</select>
+
+</mapper>
