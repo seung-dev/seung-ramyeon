@@ -35,7 +35,7 @@ public class SConfDatasource0 {
 	private final String _S_DATASOURCE_PREFIX_0 = "app.datasource.0";
 	
 	@Bean(name = "datasource0Properties")
-	public Properties datasource0Properties(Environment environment) {
+	Properties datasource0Properties(Environment environment) {
 		Properties properties = new Properties();
 		Binder.get(environment).bind(_S_DATASOURCE_PREFIX_0, Bindable.of(Properties.class)).get().forEach((key, value) -> {
 			properties.put(CaseUtils.toCamelCase(key.toString(), false, '-'), value);
@@ -45,7 +45,7 @@ public class SConfDatasource0 {
 	
 	@Primary
 	@Bean(name = "dataSource0", destroyMethod = "close")
-	public DataSource dataSource0(
+	DataSource dataSource0(
 			@Qualifier("datasource0Properties") Properties datasource0Properties
 			) throws JsonProcessingException {
 		log.debug("run");
@@ -56,7 +56,7 @@ public class SConfDatasource0 {
 	
 	@Primary
 	@Bean(name = "sqlSessionFactory0")
-	public SqlSessionFactory sqlSessionFactory0(
+	SqlSessionFactory sqlSessionFactory0(
 			@Qualifier("dataSource0") DataSource dataSource0
 			) throws Exception {
 		log.debug("run");
@@ -75,7 +75,7 @@ public class SConfDatasource0 {
 	
 	@Primary
 	@Bean(name = "sqlSessionTemplate0")
-	public SqlSessionTemplate sqlSessionTemplate0(
+	SqlSessionTemplate sqlSessionTemplate0(
 			@Qualifier("sqlSessionFactory0") SqlSessionFactory sqlSessionFactory0
 			) {
 		log.debug("run");
@@ -84,7 +84,7 @@ public class SConfDatasource0 {
 	
 	@Primary
 	@Bean(name = "platformTransactionManager0")
-	public PlatformTransactionManager platformTransactionManager0(
+	PlatformTransactionManager platformTransactionManager0(
 			@Qualifier("dataSource0") DataSource dataSource0
 			) {
 		log.debug("run");

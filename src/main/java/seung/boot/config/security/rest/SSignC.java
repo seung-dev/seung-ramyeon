@@ -6,10 +6,10 @@ import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class SSignC {
 	@Resource(name = "sOAuth2UserService")
 	private SOAuth2UserService sOAuth2UserService;
 	
-	@RequestMapping(value = {"/rest/sign/up/username/verify"}, method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = {"/rest/sign/up/username/verify"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> verify_username(
 			@RequestAttribute final SRequestAttribute request_attribute
 			, @Valid @RequestBody final SVerifyUsername request_body
@@ -39,7 +39,7 @@ public class SSignC {
 		return sSignS.verify_username(request_attribute, request_body);
 	}// end of verify_username
 	
-	@RequestMapping(value = {"/rest/sign/up/username"}, method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = {"/rest/sign/up/username"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> signup_username(
 			@RequestAttribute final SRequestAttribute request_attribute
 			, @Valid @RequestBody final SSignupUsername request_body
@@ -48,7 +48,7 @@ public class SSignC {
 		return sSignS.signup_username(request_attribute, request_body);
 	}// end of signup_username
 	
-	@RequestMapping(value = {"/rest/sign/in/username"}, method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = {"/rest/sign/in/username"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> signin_username(
 			@RequestAttribute final SRequestAttribute request_attribute
 			, @Valid @RequestBody final SSigninUsername request_body
@@ -57,7 +57,7 @@ public class SSignC {
 		return sSignS.signin_username(request_attribute, request_body);
 	}// end of signin_username
 	
-	@RequestMapping(value = {"/rest/sign/in/success"}, method = {RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = {"/rest/sign/in/success"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> signin_success(
 			@RequestAttribute final SRequestAttribute request_attribute
 			, final HttpServletRequest request
@@ -66,7 +66,7 @@ public class SSignC {
 		return sSignS.signin_success(request_attribute, request);
 	}// end of signin_success
 	
-	@RequestMapping(value = {"/rest/sign/out"}, method = {RequestMethod.POST, RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = {"/rest/sign/out"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> signout(
 			@RequestAttribute final SRequestAttribute request_attribute
 			) throws Exception {

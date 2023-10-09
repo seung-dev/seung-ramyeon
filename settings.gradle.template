@@ -7,7 +7,7 @@
  * in the user manual at https://docs.gradle.org/6.3/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'seung-ramyeon'
+rootProject.name = "seung-ramyeon"
 
 include "seung-kimchi"
-project(":seung-kimchi").projectDir = new File()
+project(":seung-kimchi").projectDir = new File("w:/seung-git/seung-kimchi")

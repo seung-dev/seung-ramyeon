@@ -32,7 +32,7 @@ public class SConfigurationWeb extends WebMvcConfigurationSupport {
 	
 	@Primary
 	@Bean
-	public ObjectMapper objectMapper() {
+	ObjectMapper objectMapper() {
 		return SJson.object_mapper();
 	}// end of objectMapper
 	
