@@ -79,7 +79,7 @@ public class SConfigurationSecurity {
 	private SOAuth2UserService sOAuth2UserService;
 	
 	@Bean(name = "sKey")
-	public SKey sKey() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException, DecoderException {
+	SKey sKey() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException, DecoderException {
 		return new SKey(
 				SCertificate.public_key(jwt_rsa_public_key)//jwt_rsa_public_key
 				, SCertificate.private_key(jwt_rsa_private_key)//jwt_rsa_private_key
@@ -88,12 +88,12 @@ public class SConfigurationSecurity {
 	
 	@ConfigurationProperties(prefix = "app.security.oauth2")
 	@Bean(name = "oauth2Properties")
-	public Properties oauth2Properties() {
+	Properties oauth2Properties() {
 		return new Properties();
 	}
 	
 	@Bean(BeanIds.AUTHENTICATION_MANAGER)
-	public AuthenticationProvider authenticationProvider() {
+	AuthenticationProvider authenticationProvider() {
 		log.debug("run");
 		
 		SDaoAuthenticationProvider sDaoAuthenticationProvider = new SDaoAuthenticationProvider();
@@ -104,12 +104,12 @@ public class SConfigurationSecurity {
 	}// end of authenticationProvider
 	
 	@Bean
-	public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+	GrantedAuthorityDefaults grantedAuthorityDefaults() {
 		return new GrantedAuthorityDefaults("");
 	}// end of grantedAuthorityDefaults
 	
 	@Bean
-	public CorsFilter corsFilter() {
+	CorsFilter corsFilter() {
 		log.debug("run");
 		
 		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
@@ -151,29 +151,28 @@ public class SConfigurationSecurity {
 		httpSecurity
 			// disable
 //			.anonymous().disable()
-			.httpBasic().disable()
-			.csrf().disable()
-			.formLogin().disable()
+			.httpBasic(httpBasic -> httpBasic.disable())
+			.csrf(csrf -> csrf.disable())
+			.formLogin(formLogin -> formLogin.disable())
 			// filter
 			.addFilterBefore(
 					new SSecurityFilter(jwt_rsa_public_key, jwt_rsa_private_key, sFilterS)
 					, UsernamePasswordAuthenticationFilter.class
 					)
 			// session
-			.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.sessionManagement(sessionManagement -> sessionManagement
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+					)
 			// exception
-			.and()
-				.exceptionHandling()
-				.accessDeniedHandler(new SAccessDeniedHandler())
-				.authenticationEntryPoint(new SAuthenticationEntryPoint())
+			.exceptionHandling(exceptionHandling -> exceptionHandling
+					.accessDeniedHandler(new SAccessDeniedHandler())
+					.authenticationEntryPoint(new SAuthenticationEntryPoint())
+					)
 			// requests
-			.and()
-				.authorizeRequests()
-				.antMatchers(permitall_ant_patterns.split(",")).permitAll()
-				.antMatchers("/rest/dev/**").permitAll()
-				.anyRequest().hasAnyRole("A")
-//				.anyRequest().authenticated()
+			.authorizeHttpRequests()
+			.antMatchers(permitall_ant_patterns.split(",")).permitAll()
+			.antMatchers("/rest/dev/**").permitAll()
+			.anyRequest().hasAnyRole("A")
 //			// signout
 //			.and()
 //				.logout()

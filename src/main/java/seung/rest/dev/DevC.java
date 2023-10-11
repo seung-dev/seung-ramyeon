@@ -6,10 +6,10 @@ import javax.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
 import seung.boot.config.web.types.SRequestAttribute;
@@ -25,7 +25,7 @@ public class DevC {
 	@Resource(name = "devS")
 	private DevS devS;
 	
-	@RequestMapping(value = {"/rest/dev/jwt/keypair"}, method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = {"/rest/dev/jwt/keypair"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SResponseBody> jwt_keypair(
 			@RequestAttribute final SRequestAttribute request_attribute
 			, @Valid @RequestBody final DevKeypair request_body
@@ -35,7 +35,7 @@ public class DevC {
 		return devS.jwt_keypair(request_attribute, request_body);
 	}//end of keypair
 	
-	@RequestMapping(value = {"/rest/dev/hmac"}, method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = {"/rest/dev/hmac"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SResponseBody> hmac(
 			@RequestAttribute final SRequestAttribute request_attribute
 			, @Valid @RequestBody final DevHMAC request_body

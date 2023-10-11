@@ -32,7 +32,7 @@ public class SConfiguration {
 	private BuildProperties buildProperties;
 	
 	@Bean(name = "sBuildProperties")
-	public SBuildProperties sBuildProperties() {
+	SBuildProperties sBuildProperties() {
 		log.debug("run");
 		if(buildProperties == null) {
 			return SBuildProperties.builder().build();
@@ -47,12 +47,12 @@ public class SConfiguration {
 	}// end of sBuildProperties
 	
 	@Bean(name = "sEnvironment")
-	public SEnvironment sEnvironment() {
+	SEnvironment sEnvironment() {
 		return new SEnvironment(environment);
 	}// end of sEnvironment
 	
 	@Bean(name = "sCache")
-	public SLinkedHashMap SCache() {
+	SLinkedHashMap SCache() {
 		return new SLinkedHashMap();
 	}// end of sCache
 	
