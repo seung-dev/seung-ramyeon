@@ -12,7 +12,7 @@ $ vi settings.gradle
 rootProject.name = 'seung-ramyeon'
 
 include "seung-kimchi"
-project(":seung-kimchi").projectDir = new File("./seung-kimchi)
+project(":seung-kimchi").projectDir = new File("../seung-kimchi)
 ...
 $ cp build.gradle.windows build.gradle
 $ vi build.gradle
