@@ -5,11 +5,10 @@ plugins {
 }
 
 group = "seung"
-version = "1.0.0"
+version = "23.09.20.00"
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
+	sourceCompatibility = "17"
 }
 
 repositories {
@@ -29,11 +28,6 @@ configurations {
 
 dependencies {
 
-	// seung
-	implementation(project(path: ":seung-kimchi", configuration: "default")) {
-		exclude module: "slf4j-simple"
-	}
-	
 	// test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2")
@@ -55,7 +49,7 @@ dependencies {
 	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1")
 	//implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("org.postgresql:postgresql")
-	runtimeOnly("com.microsoft.sqlserver:mssql-jdbc")
+	//runtimeOnly("com.microsoft.sqlserver:mssql-jdbc")
 	//runtimeOnly("com.oracle.ojdbc:ojdbc8")
 	//runtimeOnly("mysql:mysql-connector-java")
 	
@@ -67,6 +61,11 @@ dependencies {
 	// s3
 	implementation platform("com.amazonaws:aws-java-sdk-bom:1.11.968")
 	implementation "com.amazonaws:aws-java-sdk-s3"
+	
+	// seung
+	implementation(project(path: ":seung-kimchi", configuration: "default")) {
+		exclude module: "slf4j-simple"
+	}
 	
 	// lib
 	implementation fileTree(dir: "libs", include: "*.jar")

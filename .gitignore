@@ -826,6 +826,6 @@ obj/
 
 # End of https://www.toptal.com/developers/gitignore/api/java,gradle,maven,eclipse,intellij+all,python,flask,django,pycharm+all,react,node,yarn,nextjs,visualstudiocode,flutter,android,kotlin,objective-c,swift,androidstudio,xcode,vue,vuejs
 
-
 ### Seung ###
 settings.gradle
+build.gradle

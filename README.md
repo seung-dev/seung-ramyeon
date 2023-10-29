@@ -6,14 +6,16 @@ Rest API Spring Boot Application
 ##### Configuration
 
 ```
-$ cp settings.gradle.template settings.gradle
+$ cp settings.gradle.windows settings.gradle
 $ vi settings.gradle
 ...
 rootProject.name = 'seung-ramyeon'
 
 include "seung-kimchi"
-project(":seung-kimchi").projectDir = new File($PATH)
+project(":seung-kimchi").projectDir = new File("./seung-kimchi)
 ...
+$ cp build.gradle.windows build.gradle
+$ vi build.gradle
 ```
 
 ##### Build

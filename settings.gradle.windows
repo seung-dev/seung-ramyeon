@@ -10,4 +10,4 @@
 rootProject.name = "seung-ramyeon"
 
 include "seung-kimchi"
-project(":seung-kimchi").projectDir = new File("w:/seung-git/seung-kimchi")
+project(":seung-kimchi").projectDir = new File("./seung-kimchi")
