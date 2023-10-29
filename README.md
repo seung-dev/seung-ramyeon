@@ -29,5 +29,5 @@ $ gradlew build --refresh-dependencies
 ```
 -Xms256m
 -Xmx256m
--Dlog.path=w:/logs
+-Dlog.path=./log
 ```

@@ -1,8 +1,7 @@
 package seung.boot.config.web.advice;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import seung.boot.config.web.types.SResponseAdvice;
 import seung.boot.config.web.types.SResponseException;
@@ -184,18 +184,18 @@ public class SControllerAdvice {
 			) {
 		log.debug("run");
 		
-		HttpStatus http_status = exception.getStatus();
+		HttpStatusCode http_status_code = exception.getStatusCode();
 		
 		SResponseAdvice s_response_advice = SResponseAdvice.builder()
 				.timestamp(System.currentTimeMillis())
-				.status(http_status.value())
-				.error(http_status.getReasonPhrase())
+				.status(http_status_code.value())
+				.error(exception.getReason())
 				.message("")
 				.path(request.getRequestURI())
 				.filter("SControllerAdvice")
 				.build();
 		
-		return ResponseEntity.status(http_status).body(s_response_advice);
+		return ResponseEntity.status(http_status_code).body(s_response_advice);
 	}// end of responseStatusException
 	
 	@ExceptionHandler(value = {SResponseException.class})

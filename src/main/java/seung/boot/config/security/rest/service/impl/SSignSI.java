@@ -2,9 +2,6 @@ package seung.boot.config.security.rest.service.impl;
 
 import java.util.Collections;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import seung.boot.config.datasource.SMapper0;
 import seung.boot.config.security.crypto.SBCryptPasswordEncoder;

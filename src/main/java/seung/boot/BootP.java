@@ -1,11 +1,10 @@
 package seung.boot;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.annotation.Resource;
 import kong.unirest.Unirest;
 import lombok.extern.slf4j.Slf4j;
 import seung.boot.types.SBuildProperties;

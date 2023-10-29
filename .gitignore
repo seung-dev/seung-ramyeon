@@ -829,3 +829,6 @@ obj/
 ### Seung ###
 settings.gradle
 build.gradle
+s-security-*.properties
+s-datasource-*.properties
+

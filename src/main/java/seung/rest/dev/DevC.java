@@ -1,8 +1,5 @@
 package seung.rest.dev;
 
-import javax.annotation.Resource;
-import javax.validation.Valid;
-
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import seung.boot.config.web.types.SRequestAttribute;
 import seung.boot.config.web.types.SResponseBody;
