@@ -53,7 +53,7 @@ public class SRestSI implements SRestS {
 			log.error("({}) exception=", trace_id, e);
 		}// end of try
 		
-		return SResponseEntity.build(request_attribute, response_body);
+		return SResponseEntity.build(request_attribute, response_body.done());
 	}// end of reflect_get
 	
 	@Override
@@ -87,7 +87,7 @@ public class SRestSI implements SRestS {
 			log.error("({}) exception=", trace_id, e);
 		}// end of try
 		
-		return SResponseEntity.build(request_attribute, response_body);
+		return SResponseEntity.build(request_attribute, response_body.done());
 	}// end of reflect_post
 	
 	@Override
