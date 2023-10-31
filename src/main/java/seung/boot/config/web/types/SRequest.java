@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
+import jakarta.servlet.http.HttpServletRequest;
 import seung.kimchi.SText;
 import seung.kimchi.types.SLinkedHashMap;
 

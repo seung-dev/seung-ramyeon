@@ -1,6 +1,6 @@
 # access
 app.security.ant.patterns.authorized=/favicon.ico,/rest/reflect/**,/rest/sign/**,/rest/oauth2/**
-#app.security.permitall.attribute=hasIpAddress('127.0.0.0/32')
+app.security.access.expression=hasIpAddress('127.0.0.1/32')
 
 # jwt
 app.security.jwt.iss=example.com

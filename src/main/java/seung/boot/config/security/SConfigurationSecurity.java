@@ -5,26 +5,26 @@ import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Properties;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.codec.DecoderException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.BeanIds;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import seung.boot.config.security.crypto.SBCryptPasswordEncoder;
 import seung.boot.config.security.filter.SAccessDeniedHandler;
@@ -38,12 +38,15 @@ import seung.boot.config.security.types.SKey;
 import seung.kimchi.SCertificate;
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@Configuration
 @Slf4j
 public class SConfigurationSecurity {
 
 	@Value(value = "${app.security.permitall.ant.patterns}")
 	private String permitall_ant_patterns;
+	
+	@Value(value = "${app.security.access.expression}")
+	private String access_expression;
 	
 	@Value(value = "${app.security.jwt.rsa.public.key}")
 	private String jwt_rsa_public_key;
@@ -169,10 +172,11 @@ public class SConfigurationSecurity {
 					.authenticationEntryPoint(new SAuthenticationEntryPoint())
 					)
 			// requests
-			.authorizeHttpRequests()
-			.antMatchers(permitall_ant_patterns.split(",")).permitAll()
-			.antMatchers("/rest/dev/**").permitAll()
-			.anyRequest().hasAnyRole("A")
+			.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+					.requestMatchers(permitall_ant_patterns.split(",")).permitAll()
+					.requestMatchers("/rest/**").access(new WebExpressionAuthorizationManager(access_expression))
+					.anyRequest().hasAnyRole("S")
+					)
 //			// signout
 //			.and()
 //				.logout()

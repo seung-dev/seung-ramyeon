@@ -1,9 +1,8 @@
 package seung.boot.config.security.rest.service;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.http.ResponseEntity;
 
+import jakarta.servlet.http.HttpServletRequest;
 import seung.boot.config.security.rest.types.SSigninUsername;
 import seung.boot.config.security.rest.types.SSignupUsername;
 import seung.boot.config.security.rest.types.SVerifyUsername;

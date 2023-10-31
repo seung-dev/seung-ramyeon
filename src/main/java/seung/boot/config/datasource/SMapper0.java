@@ -2,11 +2,10 @@ package seung.boot.config.datasource;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import seung.kimchi.types.SLinkedHashMap;
 

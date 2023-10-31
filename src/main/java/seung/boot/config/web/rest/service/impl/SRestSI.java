@@ -2,11 +2,10 @@ package seung.boot.config.web.rest.service.impl;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import seung.boot.config.datasource.SMapper0;
 import seung.boot.config.web.rest.service.SRestS;
@@ -54,7 +53,7 @@ public class SRestSI implements SRestS {
 			log.error("({}) exception=", trace_id, e);
 		}// end of try
 		
-		return SResponseEntity.build(request_attribute, response_body);
+		return SResponseEntity.build(request_attribute, response_body.done());
 	}// end of reflect_get
 	
 	@Override
@@ -88,7 +87,7 @@ public class SRestSI implements SRestS {
 			log.error("({}) exception=", trace_id, e);
 		}// end of try
 		
-		return SResponseEntity.build(request_attribute, response_body);
+		return SResponseEntity.build(request_attribute, response_body.done());
 	}// end of reflect_post
 	
 	@Override
