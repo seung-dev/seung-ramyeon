@@ -9,32 +9,17 @@ import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.servlet.http.HttpServletRequest;
 import seung.kimchi.SText;
+import seung.kimchi.types.SHttpHeader;
 import seung.kimchi.types.SLinkedHashMap;
 
 public class SRequest {
 
-	public static final String _S_X_FORWARDED_PROTO = "x-forwarded-proto";
-	
-	public static final String _S_HOST = "host";
-	
-	public static final String _S_X_FORWARDED_PORT = "x-forwarded-port";
-	
-	public static final String[] _S_X_FORWARDED_FOR = {
-			"x-forwarded-for"
-			, "proxy-client-ip"
-			, "http_x_forwarded_for"
-			, "http_client_ip"
-			, "wl_proxy_client_ip"
-	};
-	
-	public static final String _S_USER_AGENT = "user-agent";
-	
 	public static final String _S_REQUEST_ATTRIBUTE = "request_attribute";
 	
 	public static final String _S_TRACE_ID = "trace_id";
 	
 	public static String scheme(HttpServletRequest request) {
-		String scheme = request.getHeader(_S_X_FORWARDED_PROTO);
+		String scheme = request.getHeader(SHttpHeader._S_X_FORWARDED_PROTO);
 		if(!SText.is_empty(scheme)) {
 			return scheme;
 		}
@@ -42,7 +27,11 @@ public class SRequest {
 	}// end of scheme
 	
 	public static String host(HttpServletRequest request) {
-		String host = request.getHeader(_S_HOST);
+		String host = request.getHeader(SHttpHeader._S_X_FORWARDED_HOST);
+		if(!SText.is_empty(host)) {
+			return host;
+		}
+		host = request.getHeader(SHttpHeader._S_HOST);
 		if(!SText.is_empty(host)) {
 			return host;
 		}
@@ -50,25 +39,14 @@ public class SRequest {
 	}// end of host
 	
 	public static int port(HttpServletRequest request) {
-		String port = request.getHeader(_S_X_FORWARDED_PORT);
-		if(!SText.is_empty(port)) {
-			return Integer.parseInt(port);
-		}
 		return request.getServerPort();
 	}// end of port
 	
-	public static String x_forwarded_for(HttpServletRequest request) {
-		String remote_addr = "";
-		for(String header_name : _S_X_FORWARDED_FOR) {
-			remote_addr = request.getHeader(header_name);
-			if(SText.is_empty(remote_addr)) {
-				continue;
-			}
-			if("unknown".equalsIgnoreCase(remote_addr)) {
-				continue;
-			}
+	public static String remote_addr(HttpServletRequest request) {
+		String remote_addr = request.getHeader(SHttpHeader._S_X_FORWARDED_FOR);
+		if(!SText.is_empty(remote_addr)) {
 			return remote_addr;
-		}// end of header_names
+		}
 		return request.getRemoteAddr();
 	}// end of remote_addr
 	
@@ -87,7 +65,7 @@ public class SRequest {
 	}// end of headers
 	
 	public static String user_agent(HttpServletRequest request) {
-		return request.getHeader(_S_USER_AGENT);
+		return request.getHeader(SHttpHeader._S_USER_AGENT);
 	}// end of user_agent
 	
 	public static String principal(HttpServletRequest request) {

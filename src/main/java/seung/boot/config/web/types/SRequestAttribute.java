@@ -48,13 +48,13 @@ public class SRequestAttribute extends SType {
 	private String http_method;
 	
 	@JsonProperty
-	private String url_scheme;
+	private String scheme;
 	
 	@JsonProperty
-	private String url_domain;
+	private String host;
 	
 	@JsonProperty
-	private int url_port;
+	private int port;
 	
 	@JsonProperty
 	private String url_path;
@@ -94,12 +94,12 @@ public class SRequestAttribute extends SType {
 				.local_name(request.getLocalName())
 				.local_port(request.getLocalPort())
 				.http_method(request.getMethod())
-				.url_scheme(SRequest.scheme(request))
-				.url_domain(SRequest.host(request))
-				.url_port(request.getServerPort())
+				.scheme(SRequest.scheme(request))
+				.host(SRequest.host(request))
+				.port(request.getServerPort())
 				.url_path(request.getRequestURI())
 				.url_query(request.getQueryString())
-				.remote_addr(SRequest.x_forwarded_for(request))
+				.remote_addr(SRequest.remote_addr(request))
 				.content_type(request.getContentType())
 				.user_agent(request.getHeader("user-agent"))
 				;
