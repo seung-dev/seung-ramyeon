@@ -3,6 +3,7 @@ package seung.boot.config.security;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.Properties;
 
 import org.apache.commons.codec.DecoderException;
@@ -118,24 +119,22 @@ public class SConfigurationSecurity {
 		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
 		
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.addAllowedOrigin("*");
-		corsConfiguration.addAllowedHeader("*");
-		corsConfiguration.addAllowedMethod("*");
 		
-//		corsConfiguration.setAllowedOriginPatterns(
-//				Arrays.asList(
-//						"https://www.restful.kr"
-//						, "https://10.0.1.100:10605"
-//						, "http://192.168.*:[*]"
-//						, "http://127.0.0.1:[*]"
-//						, "http://localhost:[*]"
-//						, "file://index.html"
-//						, "null"
-//						, "-"
-//				)
-//		);
+		corsConfiguration.setAllowCredentials(true);
+		
+//		corsConfiguration.addAllowedOrigin("*");
+		corsConfiguration.setAllowedOriginPatterns(
+				Arrays.asList(
+						"http://127.0.0.1:[*]"
+						, "https://restful.kr"
+						, "https://www.restful.kr"
+				)
+		);
+		
+		corsConfiguration.addAllowedMethod("*");
 //		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST"));
+		
+		corsConfiguration.addAllowedHeader("*");
 //		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Accept", "Content-Type", "X-Requested-With"));
 		
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/rest/**", corsConfiguration);

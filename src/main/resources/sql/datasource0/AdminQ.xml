@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.datasource0.UserQ">
+
+<parameterMap id="parameterMap" type="seung.kimchi.types.SLinkedHashMap"></parameterMap>
+<resultMap    id="resultMap"    type="seung.kimchi.types.SLinkedHashMap"></resultMap>
+
+
+<select id="admin_t010000_00" parameterMap="parameterMap" resultMap="resultMap">
+<![CDATA[
+SELECT
+	t_d0100.user_state
+	, COALESCE(t_d0100.email, '') AS email
+	, COALESCE(t_d0100.phone_number, '') AS phone_number
+	, t_d0100.name_full
+	, t_d0110.user_role
+	, COALESCE(t_d0120.username, '') AS username
+	, COALESCE(TO_CHAR(t_d0120.password_expr, 'YYYY-MM-DD HH24:MI:SS'), '') AS password_expr
+	, COALESCE(t_d0120.signin_fail, 0) AS signin_fail
+	, COALESCE(t_d0120.is_temp, 0) AS is_temp
+FROM
+	restful.t_user_d0100 AS t_d0100
+	JOIN (
+		SELECT
+			user_no
+			, STRING_AGG(user_role, ',') AS user_role
+		FROM
+			restful.t_user_d0110
+		GROUP BY
+			user_no
+		) AS t_d0110
+		ON t_d0110.user_no = t_d0100.user_no
+	LEFT OUTER JOIN restful.t_user_d0120 AS t_d0120
+		ON t_d0120.user_no = t_d0100.user_no
+WHERE
+	t_d0100.user_no = #{user_no}
+]]>
+</select>
+
+<select id="admin_t010010_00" parameterMap="parameterMap" resultMap="resultMap">
+<![CDATA[
+SELECT
+	COUNT(*) AS admin_t010010_00
+FROM
+	restful.t_user_d0100 AS t_d0100
+	JOIN (
+		SELECT
+			user_no
+			, STRING_AGG(user_role, ',') AS user_role
+		FROM
+			restful.t_user_d0110
+		GROUP BY
+			user_no
+		) AS t_d0110
+		ON t_d0110.user_no = t_d0100.user_no
+	LEFT OUTER JOIN restful.t_user_d0120 AS t_d0120
+		ON t_d0120.user_no = t_d0100.user_no
+]]>
+<where>
+	<if test="user_state != null and !user_state.equals('')"><![CDATA[
+		AND t_d0100.user_state = #{user_state}
+	]]></if>
+	<if test="user_state != null and !user_state.equals('')"><![CDATA[
+		AND t_d0100.phone_number ~ #{phone_number}
+	]]></if>
+	<if test="name_full != null and !name_full.equals('')"><![CDATA[
+		AND t_d0100.name_full ~ #{name_full}
+	]]></if>
+	<if test="user_role != null and !user_role.equals('')"><![CDATA[
+		AND t_d0110.user_role ~ #{user_role}
+	]]></if>
+	<if test="username != null and !username.equals('')"><![CDATA[
+		AND t_d0120.username ~ #{username}
+	]]></if>
+</where>
+</select>
+<select id="admin_t010010_10" parameterMap="parameterMap" resultMap="resultMap">
+<![CDATA[
+SELECT
+	t_d0100.user_no
+	, TO_CHAR(t_d0100.date_inst, 'YYYY-MM-DD HH24:MI:SS') AS date_inst
+	, t_d0100.user_state
+	, TO_CHAR(t_d0100.date_signin, 'YYYY-MM-DD HH24:MI:SS') AS date_signin
+	, TO_CHAR(t_d0100.date_close, 'YYYY-MM-DD HH24:MI:SS') AS date_close
+	, CASE
+		WHEN COALESCE(t_d0100.email, '') <> '' THEN CONCAT(
+				REGEXP_REPLACE(SPLIT_PART(COALESCE(t_d0100.email, ''), '@', 1), '(?<!^).', '*', 'g')
+				, '@'
+				, SPLIT_PART(COALESCE(t_d0100.email, ''), '@', 2)
+			)
+		ELSE ''
+		END AS email
+	, CASE
+		WHEN COALESCE(t_d0100.phone_number, '') <> '' THEN CONCAT(
+				LEFT(REGEXP_REPLACE(t_d0100.phone_number, '[0-9]', '*', 'g'), -2)
+				, RIGHT(t_d0100.phone_number, 2)
+			)
+		ELSE ''
+		END AS phone_number
+	, CASE
+		WHEN LENGTH(t_d0100.name_full) = 2 THEN CONCAT(
+			LEFT(t_d0100.name_full, 1)
+			, '*'
+			)
+		ELSE REGEXP_REPLACE(t_d0100.name_full, '(?<!^).(?!$)', '*', 'g')
+		END AS name_full
+	, t_d0100.name_nick
+	, t_d0100.avatar
+	, t_d0110.user_role
+	, COALESCE(t_d0120.username, '') AS username
+	, COALESCE(TO_CHAR(t_d0120.password_expr, 'YYYY-MM-DD HH24:MI:SS'), '') AS password_expr
+	, COALESCE(t_d0120.signin_fail, -1) AS signin_fail
+	, COALESCE(t_d0120.is_temp, -1) AS is_temp
+FROM
+	restful.t_user_d0100 AS t_d0100
+	JOIN (
+		SELECT
+			user_no
+			, STRING_AGG(user_role, ',') AS user_role
+		FROM
+			restful.t_user_d0110
+		GROUP BY
+			user_no
+		) AS t_d0110
+		ON t_d0110.user_no = t_d0100.user_no
+	LEFT OUTER JOIN restful.t_user_d0120 AS t_d0120
+		ON t_d0120.user_no = t_d0100.user_no
+]]>
+<where>
+	<if test="user_state != null and !user_state.equals('')"><![CDATA[
+		AND t_d0100.user_state = #{user_state}
+	]]></if>
+	<if test="user_state != null and !user_state.equals('')"><![CDATA[
+		AND t_d0100.phone_number ~ #{phone_number}
+	]]></if>
+	<if test="name_full != null and !name_full.equals('')"><![CDATA[
+		AND t_d0100.name_full ~ #{name_full}
+	]]></if>
+	<if test="user_role != null and !user_role.equals('')"><![CDATA[
+		AND t_d0110.user_role ~ #{user_role}
+	]]></if>
+	<if test="username != null and !username.equals('')"><![CDATA[
+		AND t_d0120.username ~ #{username}
+	]]></if>
+</where>
+<![CDATA[
+ORDER BY 2 DESC
+LIMIT #{page_size}
+OFFSET #{page_offset}
+]]>
+</select>
+
+<insert id="admin_t010020_20" parameterMap="parameterMap">
+<![CDATA[
+INSERT INTO restful.t_user_d0100
+(
+	user_no
+	, user_state
+	, email
+	, phone_number
+	, name_full
+)
+SELECT
+	#{user_no}
+	, #{user_state}
+	, #{username}
+	, COALESCE(#{phone_number}, '')
+	, #{name_full}
+WHERE
+	NOT EXISTS (
+		SELECT
+			1
+		FROM
+			restful.t_user_d0100
+		WHERE
+			user_no = #{user_no}
+	)
+]]>
+</insert>
+<insert id="admin_t010020_21" parameterMap="parameterMap">
+<![CDATA[
+INSERT INTO restful.t_user_d0110
+(
+	user_no
+	, user_role
+	, user_no_updt
+)
+SELECT
+	#{user_no}
+	, #{user_role}
+	, #{principal}
+WHERE
+	NOT EXISTS (
+		SELECT
+			1
+		FROM
+			restful.t_user_d0110
+		WHERE
+			user_no = #{user_no}
+			AND user_role = #{user_role}
+	)
+]]>
+</insert>
+<insert id="admin_t010020_22" parameterMap="parameterMap">
+<![CDATA[
+INSERT INTO restful.t_user_d0120
+(
+	username
+	, user_no
+	, password
+)
+SELECT
+	#{username}
+	, #{user_no}
+	, #{password}
+WHERE
+	NOT EXISTS (
+		SELECT
+			1
+		FROM
+			restful.t_user_d0120
+		WHERE
+			username = #{username}
+	)
+]]>
+</insert>
+<insert id="admin_t010020_23" parameterMap="parameterMap">
+<![CDATA[
+INSERT INTO restful.t_user_d0209
+(
+	org_no
+	, user_no
+	, user_no_updt
+)
+VALUES
+(
+	#{org_no}
+	, #{user_no}
+	, #{principal}
+)
+]]>
+</insert>
+<insert id="admin_t010020_24" parameterMap="parameterMap">
+<![CDATA[
+INSERT INTO restful.t_user_d0121
+(
+	edit_no
+	, username
+	, edit_expr
+	, email
+)
+VALUES
+(
+	#{edit_no}
+	, #{username}
+	, TO_TIMESTAMP(#{edit_expr}::BIGINT / 1000.0)
+	, #{username}
+)
+]]>
+</insert>
+
+<insert id="admin_t010021_20" parameterMap="parameterMap">
+<![CDATA[
+INSERT INTO restful.t_user_d0121
+(
+	edit_no
+	, username
+	, email
+)
+VALUES
+(
+	#{edit_no}
+	, #{username}
+	, #{username}
+)
+]]>
+</insert>
+
+<update id="admin_t010030_30" parameterMap="parameterMap">
+<![CDATA[
+UPDATE restful.t_user_d0100
+SET
+	date_updt = NOW()
+	, user_state = #{user_state}
+	, phone_number = #{phone_number}
+	, name_full = #{name_full}
+WHERE
+	user_no = #{user_no}
+]]>
+</update>
+
+<select id="admin_t011000_00" parameterMap="parameterMap" resultMap="resultMap">
+<![CDATA[
+SELECT
+	COUNT(*) AS admin_t011000_00
+FROM
+	restful.t_user_d0200 AS t_items
+WHERE
+	org_no <> '0000000000000000'
+	AND is_active = 1
+]]>
+</select>
+<select id="admin_t011000_10" parameterMap="parameterMap" resultMap="resultMap">
+<![CDATA[
+SELECT
+	org_no
+	, org_domain
+	, org_name
+FROM
+	restful.t_user_d0200 AS t_items
+WHERE
+	org_no <> '0000000000000000'
+	AND is_active = 1
+]]>
+</select>
+
+<insert id="admin_t011020_20" parameterMap="parameterMap">
+<![CDATA[
+INSERT INTO restful.t_user_d0200
+(
+	org_no
+	, org_domain
+	, org_no_prev
+	, org_layer
+	, org_name
+)
+SELECT
+	#{org_no}
+	, #{org_domain}
+	, #{org_no_prev}
+	, t_d0200.org_layer + 1
+	, #{org_name}
+FROM
+	restful.t_user_d0200 AS t_d0200
+WHERE
+	t_d0200.org_no = #{org_no_prev}
+]]>
+</insert>
+
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.datasource0.HistQ">
+
+<parameterMap id="parameterMap" type="seung.kimchi.types.SLinkedHashMap"></parameterMap>
+<resultMap    id="resultMap"    type="seung.kimchi.types.SLinkedHashMap"></resultMap>
+
+
+<insert id="add_rest_hist" parameterMap="parameterMap">
+<![CDATA[
+INSERT INTO restful.t_hist_d0100
+(
+	trace_id
+	, request_time
+	, response_time
+	, http_method
+	, scheme
+	, host
+	, port
+	, url_path
+	, url_query
+	, remote_addr
+	, content_type
+	, user_agent
+	, referer
+	, http_status
+	, user_no
+	, user_roles
+	, error_code
+)
+VALUES
+(
+	#{trace_id}
+	, TO_TIMESTAMP(#{request_time}::BIGINT / 1000.0)
+	, TO_TIMESTAMP(#{response_time}::BIGINT / 1000.0)
+	, #{http_method}
+	, #{scheme}
+	, #{host}
+	, #{port}
+	, SUBSTRING(#{url_path}, 1, 64)
+	, SUBSTRING(COALESCE(#{url_query}, ''), 1, 256)
+	, #{remote_addr}
+	, SUBSTRING(COALESCE(#{content_type}, ''), 1, 128)
+	, SUBSTRING(COALESCE(#{user_agent}, ''), 1, 256)
+	, SUBSTRING(COALESCE(#{referer}, ''), 1, 256)
+	, #{http_status}
+	, COALESCE(#{principal}, '')
+	, COALESCE(#{user_roles}, '')
+	, COALESCE(#{error_code}, '')
+)
+]]>
+</insert>
+
+<select id="hist_t010000_00" parameterMap="parameterMap" resultMap="resultMap">
+<![CDATA[
+SELECT
+	COUNT(*) AS hist_t010000_00
+FROM
+	restful.t_hist_d0100 AS t_d0100
+]]>
+</select>
+<select id="hist_t010000_10" parameterMap="parameterMap" resultMap="resultMap">
+<![CDATA[
+SELECT
+	TO_CHAR(t_d0100.date_updt, 'YYYY-MM-DD HH24:MI:SS')
+	, t_d0100.trace_id
+	, t_d0100.request_time
+	, t_d0100.response_time
+	, t_d0100.http_method
+	, t_d0100.scheme
+	, t_d0100.host
+	, t_d0100.port
+	, t_d0100.url_path
+	, t_d0100.url_query
+	, t_d0100.remote_addr
+	, t_d0100.content_type
+	, t_d0100.user_agent
+	, t_d0100.referer
+	, t_d0100.http_status
+	, t_d0100.user_no
+	, t_d0100.user_roles
+	, t_d0100.error_code
+FROM
+	restful.t_hist_d0100 AS t_d0100
+ORDER BY 1 DESC
+LIMIT #{page_size}
+OFFSET #{page_offset}
+]]>
+</select>
+
+</mapper>

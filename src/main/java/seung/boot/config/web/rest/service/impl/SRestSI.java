@@ -105,8 +105,8 @@ public class SRestSI implements SRestS {
 		try {
 			
 			query.merge(request_attribute);
-			query.add("roles", String.join(",", request_attribute.roles()));
 			query.add("http_status", http_status);
+			query.add("roles", String.join(",", request_attribute.roles()));
 			
 			add_rest_hist = sMapper0.insert("add_rest_hist", query);
 			

@@ -42,10 +42,9 @@ public class SResponseBody extends SType {
 	@JsonProperty
 	private String error_code = SError.FAIL.code();
 	
-	@Builder.Default
 	@Setter
 	@JsonProperty
-	private String error_message = "";
+	private String error_message;
 	
 	@Builder.Default
 	@JsonProperty

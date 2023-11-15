@@ -89,7 +89,7 @@ public class SRequestAttribute extends SType {
 	public static SRequestAttributeBuilder builder(final HttpServletRequest request) {
 		long request_time = System.currentTimeMillis();
 		return defaultBuilder()
-				.trace_id(String.format("%d%s", request_time, RandomStringUtils.random(7, true, true)))
+				.trace_id(String.format("%d%s", request_time, RandomStringUtils.random(5, true, true)))
 				.local_addr(request.getLocalAddr())
 				.local_name(request.getLocalName())
 				.local_port(request.getLocalPort())
